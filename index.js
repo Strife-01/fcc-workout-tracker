@@ -74,25 +74,29 @@ app.post('/api/users', (req, res) => {
 
 app.post('/api/users/:_id/exercises', async (req, res) => {
     const name = await UserNameConstructor.findById(req.params._id);
-    if (name) {
-        const elements = req.body;
-        const exercise_data = addExerciseToDatabase(
-            name.username,
-            elements.description,
-            elements.duration,
-            elements.date,
-            name._id
-        );
+    try {
+        if (name) {
+            const elements = req.body;
+            const exercise_data = addExerciseToDatabase(
+                name.username,
+                elements.description,
+                elements.duration,
+                elements.date,
+                name._id
+            );
 
-        res.json({
-            _id: exercise_data.user_id,
-            username: exercise_data.username,
-            date: exercise_data.date.toDateString(),
-            duration: exercise_data.duration,
-            description: exercise_data.description,
-        });
-    } else {
-        res.send('No user with this id in the database!');
+            res.json({
+                _id: exercise_data.user_id,
+                username: exercise_data.username,
+                date: exercise_data.date.toDateString(),
+                duration: exercise_data.duration,
+                description: exercise_data.description,
+            });
+        } else {
+            res.send('No user with this id in the database!');
+        }
+    } catch (error) {
+        console.log(error);
     }
 });
 
