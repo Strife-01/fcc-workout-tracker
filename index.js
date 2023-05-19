@@ -73,8 +73,9 @@ app.post('/api/users', (req, res) => {
 });
 
 app.post('/api/users/:_id/exercises', async (req, res) => {
-    const name = await UserNameConstructor.findById(req.params._id);
     try {
+        const name = await UserNameConstructor.findById(req.params._id);
+
         if (name) {
             const elements = req.body;
             const exercise_data = addExerciseToDatabase(
