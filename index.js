@@ -66,9 +66,9 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
-app.post('/api/users', (req, res) => {
+app.post('/api/users', async (req, res) => {
     const username = req.body.username;
-    const user_data = createUserName(username);
+    const user_data = await createUserName(username);
     res.json({ username: username, _id: user_data._id });
 });
 
@@ -99,7 +99,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
 app.get('/api/users/:_id/logs', async (req, res) => {
     const { from, to, limit } = req.query;
     const id = req.params._id;
-    const user = UserNameConstructor.findById(id);
+    const user = await UserNameConstructor.findById(id);
     if (!user) {
         res.send('No users');
         return;
