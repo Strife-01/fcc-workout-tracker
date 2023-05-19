@@ -66,9 +66,9 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
-app.post('/api/users', async (req, res) => {
+app.post('/api/users', (req, res) => {
     const username = req.body.username;
-    const user_data = await createUserName(username);
+    const user_data = createUserName(username);
     res.json({ username: username, _id: user_data._id });
 });
 
